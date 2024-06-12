@@ -34,18 +34,17 @@ def adjustWavenumbers(RefSpec, wnRefSpec, RawSpec, wnRawSpec):
 
     i1 = np.argmin(np.abs(wnRefSpec - minWavenumber))
     i2 = np.argmin(np.abs(wnRefSpec - maxWavenumber))
-    RefSpec = RefSpec[i1:i2 + 1]
-    wnRefSpec = wnRefSpec[i1:i2 + 1]
+    RefSpec = RefSpec[0,i1:i2 + 1].reshape(1,-1)
+    wnRefSpec = wnRefSpec[i1:i2 + 1].reshape(1,-1)
 
     j1 = np.argmin(np.abs(wnRawSpec - minWavenumber))
     j2 = np.argmin(np.abs(wnRawSpec - maxWavenumber))
     RawSpec = RawSpec[:, j1:j2 + 1]
-    wnRawSpec = wnRawSpec[j1:j2 + 1]
+    wnRawSpec = wnRawSpec[j1:j2 + 1].reshape(1,-1)
 
     # Interpolate the reference spectrum to match the raw spectrum wavenumbers
-    interpolation_function = interp1d(wnRefSpec, RefSpec, kind='linear', fill_value="extrapolate")
-    RefSpecFitted = interpolation_function(wnRawSpec)
-    
+    RefSpecFitted = interp1d(wnRefSpec.flatten(), RefSpec.flatten(), kind='linear', fill_value="extrapolate")(wnRawSpec.flatten())
+
     RawSpecFitted = RawSpec
     wn = wnRawSpec
 
@@ -56,4 +55,4 @@ def adjustWavenumbers(RefSpec, wnRefSpec, RawSpec, wnRawSpec):
         if np.isnan(RefSpecFitted[-1]):
             RefSpecFitted[-1] = RefSpecFitted[-2]
 
-    return RefSpecFitted, RawSpecFitted, wn
+    return RefSpecFitted.reshape(1,-1), RawSpecFitted, wn.flatten()

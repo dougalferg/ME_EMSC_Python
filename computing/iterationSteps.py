@@ -69,7 +69,7 @@ def iterationSteps(spectrumRowForCorrection, spectraNumber, correctedSpectraForI
     for iterationNumber in range(2, maxIterationNumber + 1):
         # Scale the reference spectrum in each iteration
         if options['scaleRef']:
-            correctedSpectraForIteration, _, _ = basicEMSCsolver(correctedSpectraForIteration, EMSCScaleModel)
+            correctedSpectraForIteration, _, _ = basicEMSCsolver.basicEMSCsolver(correctedSpectraForIteration, EMSCScaleModel)
         
         # Apply weights to the corrected spectra
         correctedSpectraForIteration *= weights
@@ -85,10 +85,10 @@ def iterationSteps(spectrumRowForCorrection, spectraNumber, correctedSpectraForI
             referenceSpectrum = correctedSpectraForIteration.copy()
         
         # Create ME-EMSC model
-        MieEMSCmodel, PCnumber = make_ME_EMSCmodel(referenceSpectrum, correctedSpectraForIteration, wn, alpha0, gamma, options, PCnumber)
+        MieEMSCmodel, PCnumber = make_ME_EMSCmodel.make_ME_EMSCmodel(referenceSpectrum, correctedSpectraForIteration, wn, alpha0, gamma, options, PCnumber)
         
         # Calculate corrected spectrum and parameters from EMSC
-        correctedSpectraForIteration, residualsFromIteration, parameters = ME_EMSCsolver(spectrumRowForCorrection, MieEMSCmodel)
+        correctedSpectraForIteration, residualsFromIteration, parameters = ME_EMSCsolver.ME_EMSCsolver(spectrumRowForCorrection, MieEMSCmodel)
         
         # Calculate root mean square error
         if not options['fixIterationNumber']:

@@ -42,8 +42,8 @@ options['maxRefractiveIndex'] = 1.5
 RMSE_limit = 1000
 
 # Data converting
-referenceSpectrum = MatrigelSpectrum[:, 1]
-normalizedReferenceSpectrum = referenceSpectrum / max(referenceSpectrum)
+referenceSpectrum = MatrigelSpectrum[:, 1].reshape(1,-1)
+normalizedReferenceSpectrum = referenceSpectrum / np.max(referenceSpectrum)
 wn_ref = MatrigelSpectrum[:, 0]
 measuredSpectra = measuredSpectraData['measured_spec']
 wn_raw = np.array(list(map(float,  measuredSpectraData['measured_wavs'])))

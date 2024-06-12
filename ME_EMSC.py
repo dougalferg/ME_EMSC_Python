@@ -103,7 +103,7 @@ def ME_EMSC(normalizedReferenceSpectrum, spectraForCorrection, wn, options):
     if maxIterationNumber > 1:
         for spectrumNumber in range(numberOfSpectra):
             correctedSpectraForIteration, residualsFromIteration, parameters, numberOfIterationsForSpectra = iterationSteps.iterationSteps(
-                spectraForCorrection[spectrumNumber, :], spectrumNumber, correctedSpectra[spectrumNumber, :], EMSCScaleModel,
+                spectraForCorrection[spectrumNumber, :].reshape(1,-1), spectrumNumber, correctedSpectra[spectrumNumber, :].reshape(1,-1), EMSCScaleModel,
                 maxIterationNumber, weights, wn, alpha0, gamma, options, PCnumber)
             correctedSpectra[spectrumNumber, :] = correctedSpectraForIteration
             EMSCparameters[spectrumNumber, :] = parameters

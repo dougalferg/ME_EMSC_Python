@@ -28,16 +28,16 @@ def make_MieExtinction_curves(absorbanceSpectrum, wn, alpha0, gamma):
     """
     
     # Imaginary part of the refractive index
-    RefIndexABS = absorbanceSpectrum
+    RefIndexABS = absorbanceSpectrum.T
     
     # Number of points for extending the absorbance spectrum
     xts = 200
     
     # Extend the absorbance spectrum in both directions
     dx = wn[1] - wn[0]
-    wn = np.concatenate([(dx * np.linspace(1, xts, xts) + (wn[0] - dx * (xts + 1))), wn, 
-                         (dx * np.linspace(1, xts, xts) + wn[-1])])
-    RefIndexABS = np.concatenate([np.full(xts, RefIndexABS[0]), RefIndexABS, 
+    wn = np.concatenate([((dx * np.linspace(1, xts, xts)) + (wn[0] - dx * (xts + 1))), wn, 
+                         ((dx * np.linspace(1, xts, xts)) + wn[-1])])
+    RefIndexABS = np.concatenate([np.full(xts, RefIndexABS[0]), RefIndexABS.flatten(), 
                                   np.full(xts, RefIndexABS[-1])])
     
     # Calculate real fluctuating part
