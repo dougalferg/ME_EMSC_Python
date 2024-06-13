@@ -3,11 +3,11 @@ import os
 
 header = str(os.getcwd())
 sub_module = header + r'\Documents\GitHub'
-full_path = sub_module + r'\ME_EMSC_Python\\'
+full_path = sub_module + r'\ME_EMSC_Python\src'
 sys.path.append(full_path)
 sys.path.append(full_path+'\\computing\\')
 sys.path.append(full_path+'\\data\\')
-sys.path.append(full_path+'\\EMSC\\')
+sys.path.append(full_path+'\\computing\\EMSC\\')
 sys.path.append(full_path+'\\helpers\\')
 
 

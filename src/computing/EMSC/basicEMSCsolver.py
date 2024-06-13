@@ -32,9 +32,9 @@ def basicEMSCsolver(RawSpectra, EMSCModel):
     # Solve for Parameters using least squares
     Parameters = np.linalg.lstsq(Model, RawSpectra.T, rcond=None)[0].T
     
-    k = np.arange(3)
+    #take first 3 columns of the parameters
     # Calculate corrected spectra
-    Corrected = RawSpectra - np.dot(Parameters[:, k], EMSCModel[:, k].T)
+    Corrected = RawSpectra - np.dot(Parameters[:, 0:3], EMSCModel[:, 0:3].T)
     Corrected = Corrected / Parameters[:, 3].reshape(-1, 1)  # correct for multiplicative effects
     
     # Calculate residuals
